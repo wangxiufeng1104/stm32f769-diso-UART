@@ -64,10 +64,15 @@ build/MINGW32_NT-6.2/simulator/main.o: simulator/main.cpp \
  ../Middlewares/ST/TouchGFX/touchgfx//framework/include/touchgfx/JSMOCHelper.hpp \
  ../Middlewares/ST/TouchGFX/touchgfx//framework/include/mvp/Presenter.hpp \
  gui/include/gui/model/Model.hpp \
- gui/include/gui/screen1_screen/Screen1View.hpp \
- generated/gui_generated/include/gui_generated/screen1_screen/Screen1ViewBase.hpp \
- gui/include/gui/screen1_screen/Screen1Presenter.hpp \
+ gui/include/gui/ledscreen_screen/ledScreenView.hpp \
+ generated/gui_generated/include/gui_generated/ledscreen_screen/ledScreenViewBase.hpp \
+ gui/include/gui/ledscreen_screen/ledScreenPresenter.hpp \
  gui/include/gui/model/ModelListener.hpp \
+ ../Middlewares/ST/TouchGFX/touchgfx//framework/include/touchgfx/widgets/Image.hpp \
+ ../Middlewares/ST/TouchGFX/touchgfx//framework/include/touchgfx/widgets/Widget.hpp \
+ ../Middlewares/ST/TouchGFX/touchgfx//framework/include/touchgfx/widgets/ButtonWithLabel.hpp \
+ ../Middlewares/ST/TouchGFX/touchgfx//framework/include/touchgfx/widgets/Button.hpp \
+ ../Middlewares/ST/TouchGFX/touchgfx//framework/include/touchgfx/widgets/AbstractButton.hpp \
  generated/images/include/BitmapDatabase.hpp \
  generated/gui_generated/include/gui_generated/common/SimConstants.hpp \
  ../Middlewares/ST/TouchGFX/touchgfx//framework/include/platform/driver/touch/SDL2TouchController.hpp \
@@ -204,13 +209,23 @@ generated/gui_generated/include/gui_generated/common/FrontendApplicationBase.hpp
 
 gui/include/gui/model/Model.hpp:
 
-gui/include/gui/screen1_screen/Screen1View.hpp:
+gui/include/gui/ledscreen_screen/ledScreenView.hpp:
 
-generated/gui_generated/include/gui_generated/screen1_screen/Screen1ViewBase.hpp:
+generated/gui_generated/include/gui_generated/ledscreen_screen/ledScreenViewBase.hpp:
 
-gui/include/gui/screen1_screen/Screen1Presenter.hpp:
+gui/include/gui/ledscreen_screen/ledScreenPresenter.hpp:
 
 gui/include/gui/model/ModelListener.hpp:
+
+../Middlewares/ST/TouchGFX/touchgfx//framework/include/touchgfx/widgets/Image.hpp:
+
+../Middlewares/ST/TouchGFX/touchgfx//framework/include/touchgfx/widgets/Widget.hpp:
+
+../Middlewares/ST/TouchGFX/touchgfx//framework/include/touchgfx/widgets/ButtonWithLabel.hpp:
+
+../Middlewares/ST/TouchGFX/touchgfx//framework/include/touchgfx/widgets/Button.hpp:
+
+../Middlewares/ST/TouchGFX/touchgfx//framework/include/touchgfx/widgets/AbstractButton.hpp:
 
 generated/images/include/BitmapDatabase.hpp:
 

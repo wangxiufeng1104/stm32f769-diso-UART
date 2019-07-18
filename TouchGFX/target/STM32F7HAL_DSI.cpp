@@ -24,20 +24,20 @@ extern "C"
 #include "stm32f7xx_hal_ltdc.h"
 #include "stm32f7xx_hal_gpio.h"
 
-    extern LTDC_HandleTypeDef hltdc;
-    extern DSI_HandleTypeDef hdsi;
+extern LTDC_HandleTypeDef hltdc;
+extern DSI_HandleTypeDef hdsi;
 
-    /* Request tear interrupt at specific scanline. Implemented in BoardConfiguration.cpp */
-    void LCD_ReqTear();
+/* Request tear interrupt at specific scanline. Implemented in BoardConfiguration.cpp */
+void LCD_ReqTear();
 
-    /* Configures display to update indicated region of the screen (200pixel wide chunks) - 16bpp mode */
-    void LCD_SetUpdateRegion(int idx);
+/* Configures display to update indicated region of the screen (200pixel wide chunks) - 16bpp mode */
+void LCD_SetUpdateRegion(int idx);
 
-    /* Configures display to update left half of the screen. Implemented in BoardConfiguration.cpp  - 24bpp mode*/
-    void LCD_SetUpdateRegionLeft();
+/* Configures display to update left half of the screen. Implemented in BoardConfiguration.cpp  - 24bpp mode*/
+void LCD_SetUpdateRegionLeft();
 
-    /* Configures display to update right half of the screen. Implemented in BoardConfiguration.cpp - 24bpp mode*/
-    void LCD_SetUpdateRegionRight();
+/* Configures display to update right half of the screen. Implemented in BoardConfiguration.cpp - 24bpp mode*/
+void LCD_SetUpdateRegionRight();
 }
 
 static volatile bool displayRefreshing = false;
@@ -84,7 +84,7 @@ void STM32F7HAL_DSI::configureInterrupts()
     NVIC_SetPriority(DSI_IRQn, 7);
 }
 
-/* Enable LCD line interrupt, when entering video (active) area */
+/* Enable LCD line interrupt, when entering video (active) area */ 
 void STM32F7HAL_DSI::enableLCDControllerInterrupt()
 {
     LCD_ReqTear();
@@ -99,14 +99,14 @@ void STM32F7HAL_DSI::disableInterrupts()
 {
     NVIC_DisableIRQ(DMA2D_IRQn);
     NVIC_DisableIRQ(DSI_IRQn);
-    //NVIC_DisableIRQ(LTDC_ER_IRQn);
+    NVIC_DisableIRQ(LTDC_ER_IRQn);
 }
 
 void STM32F7HAL_DSI::enableInterrupts()
 {
     NVIC_EnableIRQ(DMA2D_IRQn);
     NVIC_EnableIRQ(DSI_IRQn);
-    //NVIC_EnableIRQ(LTDC_ER_IRQn);
+    NVIC_EnableIRQ(LTDC_ER_IRQn);
 }
 
 bool STM32F7HAL_DSI::beginFrame()
@@ -125,7 +125,7 @@ void STM32F7HAL_DSI::endFrame()
 }
 
 extern "C"
-void HAL_DSI_TearingEffectCallback(DSI_HandleTypeDef* hdsi)
+void HAL_DSI_TearingEffectCallback(DSI_HandleTypeDef *hdsi)
 {
     GPIO::set(GPIO::VSYNC_FREQ);
 
@@ -167,15 +167,14 @@ void HAL_DSI_TearingEffectCallback(DSI_HandleTypeDef* hdsi)
         // Transfer a quarter screen of pixel data.
         HAL_DSI_Refresh(hdsi);
         displayRefreshing = true;
-    }
-    else
+    } else
     {
         GPIO::clear(GPIO::VSYNC_FREQ);
     }
 }
 
 extern "C"
-void HAL_DSI_EndOfRefreshCallback(DSI_HandleTypeDef* hdsi)
+void HAL_DSI_EndOfRefreshCallback(DSI_HandleTypeDef *hdsi)
 {
     if (displayRefreshing)
     {
@@ -210,8 +209,7 @@ void HAL_DSI_EndOfRefreshCallback(DSI_HandleTypeDef* hdsi)
                     HAL::getInstance()->frontPorchEntered();
                 }
             }
-        }
-        else   //Default to 16bpp
+        } else //Default to 16bpp
         {
             updateRegion++;
             if (updateRegion < 4)
@@ -243,3 +241,4 @@ void HAL_DSI_EndOfRefreshCallback(DSI_HandleTypeDef* hdsi)
         }
     }
 }
+

@@ -1,10 +1,10 @@
 #include <common/TouchGFXInit.hpp>
 #include <touchgfx/hal/BoardConfiguration.hpp>
 #include <touchgfx/hal/GPIO.hpp>
-#include <platform/driver/lcd/LCD24bpp.hpp>
+#include <platform/driver/lcd/LCD24bpp.hpp> 
 
 #include <STM32F7DMA.hpp> /* generated for F7 DMA2D acceleration */
-#include <STM32F7HAL_DSI.hpp> /* generated when a DSI display is selected on F4 */
+#include <STM32F7HAL_DSI.hpp> /* generated when a DSI display is selected on F7 */
 #include <STM32F7Instrumentation.hpp>
 
 #include <OTM8009TouchController.hpp>
@@ -43,17 +43,17 @@ extern "C"
 #include "stm32f7xx_hal.h"
 #include "stm32f7xx_hal_dsi.h"
 
-    extern DSI_HandleTypeDef    hdsi;
+extern DSI_HandleTypeDef    hdsi;
 
-    uint32_t LCD_GetXSize()
-    {
-        return OTM8009A_800X480_WIDTH;
-    }
+uint32_t LCD_GetXSize()
+{
+    return OTM8009A_800X480_WIDTH;
+}
 
-    uint32_t LCD_GetYSize()
-    {
-        return OTM8009A_800X480_HEIGHT;
-    }
+uint32_t LCD_GetYSize()
+{
+    return OTM8009A_800X480_HEIGHT;
+}
 
 #define LAYER0_ADDRESS  (0xc0000000)
 
@@ -69,7 +69,6 @@ uint8_t pCols[4][4] =
 
 uint8_t pColLeft[]    = {0x00, 0x00, 0x01, 0x8F}; /*   0 -> 399 */
 uint8_t pColRight[]   = {0x01, 0x90, 0x03, 0x1F}; /* 400 -> 799 */
-uint8_t pPage[] = { 0x00, 0x00, 0x01, 0xDF }; /*   0 -> 479 */
 
 static uint32_t frameBuf0 = (uint32_t)(LAYER0_ADDRESS);
 
@@ -80,16 +79,12 @@ static uint32_t frameBuf0 = (uint32_t)(LAYER0_ADDRESS);
   * @param  pParams: Pointer to parameter values table.
   * @retval HAL status
   */
-extern "C" void DSI_IO_WriteCmd(uint32_t NbrParams, uint8_t* pParams)
+extern "C" void DSI_IO_WriteCmd(uint32_t NbrParams, uint8_t *pParams)
 {
     if (NbrParams <= 1)
-    {
         HAL_DSI_ShortWrite(&hdsi, 0, DSI_DCS_SHORT_PKT_WRITE_P1, pParams[0], pParams[1]);
-    }
     else
-    {
-        HAL_DSI_LongWrite(&hdsi, 0, DSI_DCS_LONG_PKT_WRITE, NbrParams, pParams[NbrParams], pParams);
-    }
+        HAL_DSI_LongWrite(&hdsi, 0, DSI_DCS_LONG_PKT_WRITE, NbrParams, pParams[NbrParams], pParams); 
 }
 
 extern "C"
@@ -100,7 +95,7 @@ extern "C"
     void LCD_ReqTear(void)
     {
         uint8_t ScanLineParams[2];
-        uint16_t scanline = 480;
+        uint16_t scanline = 533;
 
         ScanLineParams[0] = scanline >> 8;
         ScanLineParams[1] = scanline & 0x00FF;
@@ -133,23 +128,23 @@ extern "C"
   */
 static void LCD_LL_Reset(void)
 {
-    /* Activate XRES active low */
-    HAL_GPIO_WritePin(GPIOJ, GPIO_PIN_15, GPIO_PIN_RESET);
+   /* Activate XRES active low */
+  HAL_GPIO_WritePin(GPIOJ, GPIO_PIN_15, GPIO_PIN_RESET);
 
-    HAL_Delay(20); /* wait 20 ms */
+  HAL_Delay(20); /* wait 20 ms */
 
-    /* Desactivate XRES */
-    HAL_GPIO_WritePin(GPIOJ, GPIO_PIN_15, GPIO_PIN_SET);
+  /* Desactivate XRES */
+  HAL_GPIO_WritePin(GPIOJ,GPIO_PIN_15, GPIO_PIN_SET);
 
-    /* Wait for 10ms after releasing XRES before sending commands */
-    HAL_Delay(10);
+  /* Wait for 10ms after releasing XRES before sending commands */
+  HAL_Delay(10);
 }
 
 using namespace touchgfx;
 void GRAPHICS_HW_Init()
 {
-
-
+     
+    
     MX_FMC_Init();
     MX_SDRAM_InitEx();
     LCD_LL_Reset();
@@ -157,15 +152,15 @@ void GRAPHICS_HW_Init()
     MX_DSI_Init();
 
     GPIO::init();
-    HAL_DSI_LongWrite(&hdsi, 0, DSI_DCS_LONG_PKT_WRITE, 4, OTM8009A_CMD_CASET, pColLeft);
-    HAL_DSI_LongWrite(&hdsi, 0, DSI_DCS_LONG_PKT_WRITE, 4, OTM8009A_CMD_PASET, pPage);
+
     //Deactivate speculative/cache access to first FMC Bank to save FMC bandwidth
     FMC_Bank1->BTCR[0] = 0x000030D2;
+       
 }
 
 __weak void OTM8009A_IO_Delay(uint32_t Delay)
 {
-    HAL_Delay(Delay);
+  HAL_Delay(Delay);
 }
 
 namespace touchgfx
@@ -178,12 +173,12 @@ static LCD24bpp display;
 static uint16_t bitdepth = 24;
 
 void touchgfx_init()
-{
-    uint16_t dispWidth = 800;
-    uint16_t dispHeight = 480;
+{ 
+  uint16_t dispWidth = 800;
+  uint16_t dispHeight = 480;
 
-    HAL& hal = touchgfx_generic_init<STM32F7HAL_DSI>(dma, display, tc, dispWidth, dispHeight, (uint16_t*) 0,
-                                                     0, 0);
+  HAL& hal = touchgfx_generic_init<STM32F7HAL_DSI>(dma, display, tc, dispWidth, dispHeight, (uint16_t*) 0, 
+                                               0, 0); 
 
     hal.setFrameBufferStartAddress((uint16_t*)frameBuf0, bitdepth, false, false);
 
@@ -201,14 +196,14 @@ void touchgfx_init()
 
     //Set MCU instrumentation and Load calculation
     hal.setMCUInstrumentation(&mcuInstr);
-    hal.enableMCULoadCalculation(true);
+    hal.enableMCULoadCalculation(true);  
 }
 }
 using namespace touchgfx;
 
 void GRAPHICS_Init()
 {
-    touchgfx::touchgfx_init();
+   touchgfx::touchgfx_init();
 }
 
 void GRAPHICS_MainTask(void)

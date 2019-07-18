@@ -145,23 +145,23 @@
     <Filter Include="Source Files\generated\gui_generated">
       <UniqueIdentifier>6782B175-3372-4910-B9C4-68AA22FCCC0B</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\gui\screen1_screen">
-      <UniqueIdentifier>9F3EC89A-3F6F-45A5-BE97-BAEE3D2F28CE</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\gui\screen1_screen">
-      <UniqueIdentifier>735819DE-38CF-4006-B7E6-E6ED94FCADA0</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\generated\gui_generated\screen1_screen">
-      <UniqueIdentifier>0C97A01B-9E48-48E9-9086-E27D8B3ADCC0</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\generated\gui_generated\common">
       <UniqueIdentifier>78804B2A-9AE8-47C8-BEFD-84D0D16637C1</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\generated\gui_generated\common">
       <UniqueIdentifier>7223A1D5-BA4B-4D38-8E45-35E0EA3376C1</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\generated\gui_generated\screen1_screen">
-      <UniqueIdentifier>F5F859A7-BB68-4B92-AF5C-6C0A25F77A4B</UniqueIdentifier>
+    <Filter Include="Header Files\gui\ledscreen_screen">
+      <UniqueIdentifier>D32CA7FC-672C-40DA-911B-9A9EEF002A4A</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\gui\ledscreen_screen">
+      <UniqueIdentifier>9C42D2D9-E2DF-434C-AACB-9C54672D0BCB</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\generated\gui_generated\ledscreen_screen">
+      <UniqueIdentifier>0AA00BEE-1301-4A41-98E0-9002928B9535</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\generated\gui_generated\ledscreen_screen">
+      <UniqueIdentifier>751BF73D-E74D-4123-990C-B839A5BCC506</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -189,14 +189,14 @@
     <ClCompile Include="..\..\generated\gui_generated\src\common\FrontendApplicationBase.cpp">
       <Filter>Source Files\generated\gui_generated\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\gui\src\screen1_screen\Screen1Presenter.cpp">
-      <Filter>Source Files\gui\screen1_screen</Filter>
+    <ClCompile Include="..\..\gui\src\ledscreen_screen\ledScreenPresenter.cpp">
+      <Filter>Source Files\gui\ledscreen_screen</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\gui\src\screen1_screen\Screen1View.cpp">
-      <Filter>Source Files\gui\screen1_screen</Filter>
+    <ClCompile Include="..\..\gui\src\ledscreen_screen\ledScreenView.cpp">
+      <Filter>Source Files\gui\ledscreen_screen</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\generated\gui_generated\src\screen1_screen\Screen1ViewBase.cpp">
-      <Filter>Source Files\generated\gui_generated\screen1_screen</Filter>
+    <ClCompile Include="..\..\generated\gui_generated\src\ledscreen_screen\ledScreenViewBase.cpp">
+      <Filter>Source Files\generated\gui_generated\ledscreen_screen</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -625,17 +625,17 @@
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\common\FrontendHeapBase.hpp">
       <Filter>Header Files\generated\gui_generated\common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\screen1_screen\Screen1Presenter.hpp">
-      <Filter>Header Files\gui\screen1_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\gui\include\gui\screen1_screen\Screen1View.hpp">
-      <Filter>Header Files\gui\screen1_screen</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\screen1_screen\Screen1ViewBase.hpp">
-      <Filter>Header Files\generated\gui_generated\screen1_screen</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\common\SimConstants.hpp">
       <Filter>Header Files\generated\gui_generated\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\ledscreen_screen\ledScreenPresenter.hpp">
+      <Filter>Header Files\gui\ledscreen_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\ledscreen_screen\ledScreenView.hpp">
+      <Filter>Header Files\gui\ledscreen_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\ledscreen_screen\ledScreenViewBase.hpp">
+      <Filter>Header Files\generated\gui_generated\ledscreen_screen</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
