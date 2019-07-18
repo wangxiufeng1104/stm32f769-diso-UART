@@ -83,6 +83,8 @@ SPI_HandleTypeDef hspi2;
 UART_HandleTypeDef huart1;
 
 osThreadId defaultTaskHandle;
+osThreadId ledTaskHandle;
+osMessageQId led_msgHandle;
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -98,6 +100,7 @@ extern void GRAPHICS_HW_Init(void);
 extern void GRAPHICS_Init(void);
 extern void GRAPHICS_MainTask(void);
 void StartDefaultTask(void const * argument);
+void ledStartEntry(void const * argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -165,6 +168,11 @@ int main(void)
     /* start timers, add new ones, ... */
   /* USER CODE END RTOS_TIMERS */
 
+  /* Create the queue(s) */
+  /* definition and creation of led_msg */
+  osMessageQDef(led_msg, 16, uint16_t);
+  led_msgHandle = osMessageCreate(osMessageQ(led_msg), NULL);
+
   /* USER CODE BEGIN RTOS_QUEUES */
     /* add queues, ... */
   /* USER CODE END RTOS_QUEUES */
@@ -173,6 +181,10 @@ int main(void)
   /* definition and creation of defaultTask */
   osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 4096);
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
+
+  /* definition and creation of ledTask */
+  osThreadDef(ledTask, ledStartEntry, osPriorityNormal, 0, 512);
+  ledTaskHandle = osThreadCreate(osThread(ledTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
     /* add threads, ... */
@@ -765,6 +777,24 @@ void StartDefaultTask(void const * argument)
         osDelay(1);
     }
   /* USER CODE END 5 */ 
+}
+
+/* USER CODE BEGIN Header_ledStartEntry */
+/**
+* @brief Function implementing the ledTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_ledStartEntry */
+void ledStartEntry(void const * argument)
+{
+  /* USER CODE BEGIN ledStartEntry */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END ledStartEntry */
 }
 
 /**
