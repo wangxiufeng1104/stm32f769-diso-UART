@@ -56,6 +56,8 @@
 /* USER CODE BEGIN Includes */
 #include "stm32f769i_discovery_qspi.h"
 #include <gui/common/UserBoardPara.hpp>
+#include <stdio.h>
+#include <stdarg.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -88,9 +90,12 @@ DMA_HandleTypeDef hdma_usart6_tx;
 
 osThreadId defaultTaskHandle;
 osThreadId ledTaskHandle;
+osThreadId ModbusTaskHandle;
 osMessageQId led_msgHandle;
+osMessageQId gui_uart_msgHandle;
 /* USER CODE BEGIN PV */
-
+#define PRINTF_BUF_SIZE  100
+static uint8_t print_buffer[PRINTF_BUF_SIZE];//打印缓存
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -107,6 +112,7 @@ extern void GRAPHICS_MainTask(void);
 static void MX_USART6_UART_Init(void);
 void StartDefaultTask(void const * argument);
 void ledStartEntry(void const * argument);
+void startModbusEntry(void const * argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -114,7 +120,44 @@ void ledStartEntry(void const * argument);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+void SendDataUSART_DMA(UART_HandleTypeDef *huart,uint8_t *pData, uint16_t Size)
+{
+	while(HAL_DMA_GetState(huart->hdmatx) == HAL_DMA_STATE_BUSY) osDelay(1);
+	HAL_UART_Transmit_DMA(huart, pData, Size);
+}
+void _dbg_printf(const char *format,...)
+{
+	uint32_t length;
+	va_list args;
+	while(HAL_DMA_GetState(huart6.hdmatx) == HAL_DMA_STATE_BUSY) osDelay(1);
+	va_start(args, format);
+	length = vsnprintf((char*)print_buffer, sizeof(print_buffer), (char*)format, args);
+	va_end(args);
+	SendDataUSART_DMA(&huart6,(uint8_t *)print_buffer,length);
+}
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
+{
+	if(huart->Instance == huart6.Instance)
+	{
+		__HAL_DMA_DISABLE(huart->hdmatx);
 
+	}
+}
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+	if(huart->Instance == huart6.Instance)
+	{
+		
+	}
+}
+void UsartReceive_IDLE(UART_HandleTypeDef *huart)
+{
+	if((__HAL_UART_GET_FLAG(huart,UART_FLAG_IDLE) != RESET))
+	{ 
+		__HAL_UART_CLEAR_IDLEFLAG(huart);
+		HAL_UART_DMAStop(huart);
+	}
+}
 /* USER CODE END 0 */
 
 /**
@@ -154,6 +197,7 @@ int main(void)
   MX_USART6_UART_Init();
   /* USER CODE BEGIN 2 */
 
+  
   /* USER CODE END 2 */
 
 /* Initialise the graphical hardware */
@@ -181,6 +225,10 @@ int main(void)
   osMessageQDef(led_msg, 16, uint16_t);
   led_msgHandle = osMessageCreate(osMessageQ(led_msg), NULL);
 
+  /* definition and creation of gui_uart_msg */
+  osMessageQDef(gui_uart_msg, 16, uint16_t);
+  gui_uart_msgHandle = osMessageCreate(osMessageQ(gui_uart_msg), NULL);
+
   /* USER CODE BEGIN RTOS_QUEUES */
     /* add queues, ... */
   /* USER CODE END RTOS_QUEUES */
@@ -191,8 +239,12 @@ int main(void)
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
   /* definition and creation of ledTask */
-  osThreadDef(ledTask, ledStartEntry, osPriorityNormal, 0, 512);
+  osThreadDef(ledTask, ledStartEntry, osPriorityBelowNormal, 0, 512);
   ledTaskHandle = osThreadCreate(osThread(ledTask), NULL);
+
+  /* definition and creation of ModbusTask */
+  osThreadDef(ModbusTask, startModbusEntry, osPriorityNormal, 0, 1024);
+  ModbusTaskHandle = osThreadCreate(osThread(ModbusTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
     /* add threads, ... */
@@ -455,7 +507,7 @@ static void MX_USART6_UART_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN USART6_Init 2 */
-
+  __HAL_UART_ENABLE_IT(&huart6,UART_IT_IDLE); //开启空闲中断
   /* USER CODE END USART6_Init 2 */
 
 }
@@ -861,6 +913,25 @@ void ledStartEntry(void const * argument)
     //osDelay(1000);
   }
   /* USER CODE END ledStartEntry */
+}
+
+/* USER CODE BEGIN Header_startModbusEntry */
+/**
+* @brief Function implementing the ModbusTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_startModbusEntry */
+void startModbusEntry(void const * argument)
+{
+  /* USER CODE BEGIN startModbusEntry */
+  /* Infinite loop */
+  for(;;)
+  {
+    _dbg_printf("hello world\n");
+    osDelay(100);
+  }
+  /* USER CODE END startModbusEntry */
 }
 
 /**
