@@ -55,6 +55,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "stm32f769i_discovery_qspi.h"
+#include <gui/common/UserBoardPara.hpp>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -790,11 +791,20 @@ void ledStartEntry(void const * argument)
 {
   /* USER CODE BEGIN ledStartEntry */
   /* Infinite loop */
+  osEvent retkey;
   for(;;)
   {
-    HAL_GPIO_TogglePin(LD_USER1_GPIO_Port,LD_USER1_Pin);
-    HAL_GPIO_TogglePin(LD_USER2_GPIO_Port,LD_USER2_Pin);
-    osDelay(1000);
+    retkey.value.v = 0;
+    retkey = osMessageGet(led_msgHandle,10);
+    if(retkey.value.v == UBP_GREENLIGHT_TOGGLE)
+    {
+        HAL_GPIO_TogglePin(LD_USER2_GPIO_Port,LD_USER2_Pin);
+    }
+    else if(retkey.value.v == UBP_REDLIGHT_TOGGLE)
+    {
+      HAL_GPIO_TogglePin(LD_USER1_GPIO_Port,LD_USER1_Pin);
+    }
+    //osDelay(1000);
   }
   /* USER CODE END ledStartEntry */
 }

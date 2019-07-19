@@ -11,6 +11,8 @@ public:
     virtual ~ledScreenView() {}
     virtual void setupScreen();
     virtual void tearDownScreen();
+	void red_buttonclick();
+	void green_buttonclick();
 protected:
 };
 

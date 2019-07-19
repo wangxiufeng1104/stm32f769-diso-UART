@@ -1,0 +1,10 @@
+#ifndef USERBOARDPARA_HPP
+#define USERBOARDPARA_HPP
+
+#define UBP_LIGHT_ON		0x01
+#define UBP_LIGHT_OFF		0x02
+#define UBP_GREENLIGHT_TOGGLE   0x03
+#define UBP_REDLIGHT_TOGGLE     0x04
+#define UBP_KEY				0x05
+
+#endif // USERBOARDPARA_HPP 

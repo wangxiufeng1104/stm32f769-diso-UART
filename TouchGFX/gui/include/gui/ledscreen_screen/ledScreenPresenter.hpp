@@ -26,6 +26,10 @@ public:
     virtual void deactivate();
 
     virtual ~ledScreenPresenter() {};
+    void set_light_toggle(uint8_t data)
+    {
+        model->set_light_toggle(data);
+    }
 
 private:
     ledScreenPresenter();

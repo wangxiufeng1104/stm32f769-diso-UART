@@ -37,6 +37,7 @@ public:
      * the ModelListener interface.
      */
     void tick();
+    void set_light_toggle(uint8_t data);
 protected:
     /**
      * Pointer to the currently active presenter.
