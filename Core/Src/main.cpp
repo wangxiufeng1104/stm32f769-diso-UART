@@ -58,6 +58,7 @@
 #include <gui/common/UserBoardPara.hpp>
 #include <stdio.h>
 #include <stdarg.h>
+#include <string.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -96,6 +97,8 @@ osMessageQId gui_uart_msgHandle;
 /* USER CODE BEGIN PV */
 #define PRINTF_BUF_SIZE  100
 static uint8_t print_buffer[PRINTF_BUF_SIZE];//打印缓存
+struct USART_RECEIVETYPE UsartType6;
+struct INS_STRUCT ins_struct;      //指令buf
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -120,6 +123,50 @@ void startModbusEntry(void const * argument);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+/**
+  * @brief  将串口数据拷贝到指令缓存
+  * @param  pSrc  串口数据缓存的地址
+	*					pDes  指令缓存的地址
+	*					Len   要拷贝的长度
+  * @note   
+  * @retval None
+	* @author 王秀峰
+	* @time   2018/07/04
+  */
+uint32_t Last_Size;//指令缓存中剩余的空间
+uint32_t L_end,L_start;
+void InsCopy(uint8_t *pSrc,uint8_t *pDes,uint8_t Len)
+{
+	//1、判断复制的方式   a 正常的复制   b 到指令缓存的尾部环形复制   c 溢出，舍弃指令
+//	uint32_t Last_Size;//指令缓存中剩余的空间
+//	uint32_t L_end,L_start;
+	Last_Size = ((uint32_t)&ins_struct.ins_Buf[INS_MAX - 1] - (uint32_t)ins_struct.insp_end) + 1;
+	if(Last_Size >= Len)  //a
+	{
+		memcpy(pDes,pSrc,Len);
+		ins_struct.insp_end = ins_struct.insp_end + Len;//更新地址
+		if(ins_struct.insp_end > &ins_struct.ins_Buf[INS_MAX - 1])
+		{
+			ins_struct.insp_end = ins_struct.ins_Buf;
+		}
+		ins_struct.ins_length += Len;
+	}
+	else
+	{
+		L_end = Last_Size;         //尾部剩余空间
+		L_start = Len - Last_Size; //头部剩余空间
+		//判断是否溢出
+//		if(L_start < ((uint32_t)ins_struct.insp_current - (uint32_t)ins_struct.ins_Buf))  //b
+//		{
+			memcpy(pDes,pSrc,L_end);
+			memcpy(ins_struct.ins_Buf,pSrc+L_end,L_start);
+			ins_struct.insp_end = &ins_struct.ins_Buf[L_start - 1] + 1;//更新地址
+			ins_struct.ins_length += Len;
+//		}
+		//溢出不做任何事情，数据自动被覆盖      c
+	}
+	
+}
 void SendDataUSART_DMA(UART_HandleTypeDef *huart,uint8_t *pData, uint16_t Size)
 {
 	while(HAL_DMA_GetState(huart->hdmatx) == HAL_DMA_STATE_BUSY) osDelay(1);
@@ -152,10 +199,21 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 }
 void UsartReceive_IDLE(UART_HandleTypeDef *huart)
 {
+	uint32_t temp;
 	if((__HAL_UART_GET_FLAG(huart,UART_FLAG_IDLE) != RESET))
 	{ 
 		__HAL_UART_CLEAR_IDLEFLAG(huart);
 		HAL_UART_DMAStop(huart);
+		temp = huart->hdmarx->Instance->NDTR;
+		UsartType6.rx_len =  RECEIVELEN - temp;
+		if(UsartType6.rx_len >= 30) UsartType6.rx_len = 0;
+		UsartType6.receive_flag = 1;   //收到数据
+		HAL_UART_Receive_DMA(huart,UsartType6.usartDMA_rxBuf,RECEIVELEN);	//将DMA收到数据放到UsartType1.usartDMA_rxBuf中
+    if(huart->Instance == huart6.Instance)
+    {
+      InsCopy(UsartType6.usartDMA_rxBuf,ins_struct.insp_end,UsartType6.rx_len);
+      SendDataUSART_DMA(huart,UsartType6.usartDMA_rxBuf, UsartType6.rx_len);
+    }	
 	}
 }
 /* USER CODE END 0 */
@@ -507,6 +565,7 @@ static void MX_USART6_UART_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN USART6_Init 2 */
+  HAL_UART_Receive_DMA(&huart6,UsartType6.usartDMA_rxBuf,30);
   __HAL_UART_ENABLE_IT(&huart6,UART_IT_IDLE); //开启空闲中断
   /* USER CODE END USART6_Init 2 */
 
@@ -928,7 +987,7 @@ void startModbusEntry(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-    _dbg_printf("hello world\n");
+    //_dbg_printf("hello world\n");
     osDelay(100);
   }
   /* USER CODE END startModbusEntry */

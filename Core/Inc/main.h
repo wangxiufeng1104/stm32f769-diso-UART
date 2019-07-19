@@ -399,7 +399,22 @@ void UsartReceive_IDLE(UART_HandleTypeDef *huart);
 #define ARDUINO_MOSI_PWM_D11_Pin GPIO_PIN_15
 #define ARDUINO_MOSI_PWM_D11_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
-
+#define RECEIVELEN 30
+struct USART_RECEIVETYPE
+{
+	uint8_t receive_flag:1;//空闲接收标记
+	uint8_t dmaSend_flag:1;//发送完成标记
+	uint16_t rx_len;//接收长度
+	uint8_t usartDMA_rxBuf[RECEIVELEN];//DMA接收缓存
+};
+#define INS_MAX 30
+struct INS_STRUCT /*!< 指令缓存*/
+{
+	uint32_t ins_length;		 /*!< 指令队列中数据的长度*/
+	uint8_t *insp_current;   /*!< 当前开始解析的指令的位置*/
+	uint8_t *insp_end;       /*!< 当前指令buf有效数据的尾部*/
+	uint8_t ins_Buf[INS_MAX];/*!< 指令buf*/
+};
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus
