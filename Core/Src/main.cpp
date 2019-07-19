@@ -793,6 +793,7 @@ void ledStartEntry(void const * argument)
   for(;;)
   {
     HAL_GPIO_TogglePin(LD_USER1_GPIO_Port,LD_USER1_Pin);
+    HAL_GPIO_TogglePin(LD_USER2_GPIO_Port,LD_USER2_Pin);
     osDelay(1000);
   }
   /* USER CODE END ledStartEntry */
