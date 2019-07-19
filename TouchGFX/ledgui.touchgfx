@@ -77,7 +77,32 @@
             "Moveable": false
           }
         ],
-        "Interactions": [],
+        "Interactions": [
+          {
+            "InteractionName": "redclick",
+            "HasCompletedTrigger": false,
+            "Trigger": {
+              "TriggerComponent": "redbutton",
+              "Type": "TriggerClicked"
+            },
+            "Action": {
+              "FunctionName": "red_buttonclick",
+              "Type": "ActionCustom"
+            }
+          },
+          {
+            "InteractionName": "greenclick",
+            "HasCompletedTrigger": false,
+            "Trigger": {
+              "TriggerComponent": "greenbutton",
+              "Type": "TriggerClicked"
+            },
+            "Action": {
+              "FunctionName": "green_buttonclick",
+              "Type": "ActionCustom"
+            }
+          }
+        ],
         "Name": "ledScreen",
         "OverrideDefaultBufferSize": false,
         "CanvasBufferSize": 0

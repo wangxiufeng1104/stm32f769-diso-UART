@@ -18,6 +18,19 @@ public:
 
     virtual void setupScreen();
 
+    /*
+     * Custom Action Handlers
+     */
+    virtual void red_buttonclick()
+    {
+        // Override and implement this function in ledScreenView
+    }
+
+    virtual void green_buttonclick()
+    {
+        // Override and implement this function in ledScreenView
+    }
+
 protected:
     FrontendApplication& application() {
         return *static_cast<FrontendApplication*>(Application::getInstance());
@@ -31,6 +44,16 @@ protected:
     touchgfx::ButtonWithLabel greenbutton;
 
 private:
+
+    /*
+     * Callback Handler Declarations
+     */
+    void buttonCallbackHandler(const touchgfx::AbstractButton& src);
+
+    /*
+     * Callback Declarations
+     */
+    touchgfx::Callback<ledScreenViewBase, const touchgfx::AbstractButton&> buttonCallback;
 
 };
 
