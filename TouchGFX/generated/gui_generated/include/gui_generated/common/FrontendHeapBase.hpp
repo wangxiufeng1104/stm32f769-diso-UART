@@ -8,11 +8,16 @@
 #include <common/Partition.hpp>
 #include <mvp/MVPHeap.hpp>
 #include <touchgfx/transitions/NoTransition.hpp>
+#include <touchgfx/transitions/SlideTransition.hpp>
+#include <touchgfx/transitions/SlideTransition.hpp>
+
 #include <gui/common/FrontendApplication.hpp>
 #include <gui/model/Model.hpp>
 
 #include <gui/ledscreen_screen/ledScreenView.hpp>
 #include <gui/ledscreen_screen/ledScreenPresenter.hpp>
+#include <gui/uartscreen_screen/uartScreenView.hpp>
+#include <gui/uartscreen_screen/uartScreenPresenter.hpp>
 
 
 /**
@@ -36,7 +41,8 @@ public:
      * @note All view types used in the application MUST be added to this list!
      */
     typedef meta::TypeList< ledScreenView,
-            meta::Nil
+            meta::TypeList< uartScreenView,
+            meta::Nil >
             > GeneratedViewTypes;
 
     /**
@@ -49,7 +55,8 @@ public:
      * @note All presenter types used in the application MUST be added to this list!
      */
     typedef meta::TypeList< ledScreenPresenter,
-            meta::Nil
+            meta::TypeList< uartScreenPresenter,
+            meta::Nil >
             > GeneratedPresenterTypes;
 
     /**
@@ -62,7 +69,9 @@ public:
      * @note All transition types used in the application MUST be added to this list!
      */
     typedef meta::TypeList< NoTransition,
-            meta::Nil
+            meta::TypeList< SlideTransition<EAST>,
+            meta::TypeList< SlideTransition<WEST>,
+            meta::Nil > >
             > GeneratedTransitionTypes;
 
     /**

@@ -1203,6 +1203,12 @@
           <name>$PROJ_DIR$\..\TouchGFX\generated\gui_generated\src\ledscreen_screen\ledScreenViewBase.cpp</name>
         </file>
       </group>
+      <group>
+        <name>uartscreen_screen</name>
+        <file>
+          <name>$PROJ_DIR$\..\TouchGFX\generated\gui_generated\src\uartscreen_screen\uartScreenViewBase.cpp</name>
+        </file>
+      </group>
     </group>
     <group>
       <name>images</name>
@@ -1256,6 +1262,15 @@
       <name>model</name>
       <file>
         <name>$PROJ_DIR$\..\TouchGFX\gui\src\model\Model.cpp</name>
+      </file>
+    </group>
+    <group>
+      <name>uartscreen_screen</name>
+      <file>
+        <name>$PROJ_DIR$\..\TouchGFX\gui\src\uartscreen_screen\uartScreenPresenter.cpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\TouchGFX\gui\src\uartscreen_screen\uartScreenView.cpp</name>
       </file>
     </group>
   </group>
@@ -1626,4 +1641,3 @@
     </group>
   </group>
 </project>
-

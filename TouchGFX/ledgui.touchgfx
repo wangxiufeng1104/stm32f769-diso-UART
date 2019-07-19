@@ -75,6 +75,35 @@
             "Clickable": false,
             "Fadeable": false,
             "Moveable": false
+          },
+          {
+            "Pressed": "__designer\\blue_buttons_round_edge_small_pressed.png",
+            "Released": "__designer\\blue_buttons_round_edge_small.png",
+            "Alpha": 255,
+            "TextId": "SingleUseId5",
+            "ReleasedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "PressedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "TextRotation": "0",
+            "Style": "Style4",
+            "Name": "buttonWithLabel1",
+            "X": 613,
+            "Y": 15,
+            "Width": 170,
+            "Height": 60,
+            "Type": "ButtonWithLabel",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
           }
         ],
         "Interactions": [
@@ -101,9 +130,131 @@
               "FunctionName": "green_buttonclick",
               "Type": "ActionCustom"
             }
+          },
+          {
+            "InteractionName": "Interaction1",
+            "HasCompletedTrigger": false,
+            "Trigger": {
+              "TriggerComponent": "buttonWithLabel1",
+              "Type": "TriggerClicked"
+            },
+            "Action": {
+              "ScreenTransitionType": "ScreenTransitionSlide",
+              "ScreenTransitionDirection": "East",
+              "ActionComponent": "uartScreen",
+              "Type": "ActionGotoScreen"
+            }
           }
         ],
         "Name": "ledScreen",
+        "OverrideDefaultBufferSize": false,
+        "CanvasBufferSize": 0
+      },
+      {
+        "Components": [
+          {
+            "RelativeFilename": "bg.png",
+            "Alpha": 255,
+            "Name": "image",
+            "X": 0,
+            "Y": 0,
+            "Width": 800,
+            "Height": 480,
+            "Type": "Image",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "Pressed": "__designer\\blue_buttons_round_edge_small_pressed.png",
+            "Released": "__designer\\blue_buttons_round_edge_small.png",
+            "Alpha": 255,
+            "TextId": "SingleUseId3",
+            "ReleasedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "PressedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "TextRotation": "0",
+            "Style": "Style4",
+            "Name": "sendButton",
+            "X": 302,
+            "Y": 361,
+            "Width": 170,
+            "Height": 60,
+            "Type": "ButtonWithLabel",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          },
+          {
+            "Pressed": "__designer\\blue_buttons_round_edge_small_pressed.png",
+            "Released": "__designer\\blue_buttons_round_edge_small.png",
+            "Alpha": 255,
+            "TextId": "SingleUseId4",
+            "ReleasedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "PressedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "TextRotation": "0",
+            "Style": "Style4",
+            "Name": "buttonWithLabel1",
+            "X": 613,
+            "Y": 15,
+            "Width": 170,
+            "Height": 60,
+            "Type": "ButtonWithLabel",
+            "Visible": true,
+            "Draggable": false,
+            "Clickable": false,
+            "Fadeable": false,
+            "Moveable": false
+          }
+        ],
+        "Interactions": [
+          {
+            "InteractionName": "Interaction1",
+            "HasCompletedTrigger": false,
+            "Trigger": {
+              "TriggerComponent": "buttonWithLabel1",
+              "Type": "TriggerClicked"
+            },
+            "Action": {
+              "ScreenTransitionType": "ScreenTransitionSlide",
+              "ScreenTransitionDirection": "West",
+              "ActionComponent": "ledScreen",
+              "Type": "ActionGotoScreen"
+            }
+          },
+          {
+            "InteractionName": "send_click",
+            "HasCompletedTrigger": false,
+            "Trigger": {
+              "TriggerComponent": "sendButton",
+              "Type": "TriggerClicked"
+            },
+            "Action": {
+              "FunctionName": "send_buttonClick",
+              "Type": "ActionCustom"
+            }
+          }
+        ],
+        "Name": "uartScreen",
         "OverrideDefaultBufferSize": false,
         "CanvasBufferSize": 0
       }
@@ -116,6 +267,18 @@
       },
       {
         "TextEntryId": "SingleUseId2",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId3",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId4",
+        "IsResource": false
+      },
+      {
+        "TextEntryId": "SingleUseId5",
         "IsResource": false
       }
     ],

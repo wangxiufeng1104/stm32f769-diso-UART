@@ -1,3 +1,4 @@
 EWARM/*
 *.o
 *.exe
+*.d

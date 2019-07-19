@@ -26,9 +26,17 @@ ledScreenViewBase::ledScreenViewBase() :
     greenbutton.setLabelColorPressed(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
     greenbutton.setAction(buttonCallback);
 
+    buttonWithLabel1.setXY(613, 15);
+    buttonWithLabel1.setBitmaps(Bitmap(BITMAP_BLUE_BUTTONS_ROUND_EDGE_SMALL_ID), Bitmap(BITMAP_BLUE_BUTTONS_ROUND_EDGE_SMALL_PRESSED_ID));
+    buttonWithLabel1.setLabelText(TypedText(T_SINGLEUSEID5));
+    buttonWithLabel1.setLabelColor(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    buttonWithLabel1.setLabelColorPressed(touchgfx::Color::getColorFrom24BitRGB(255, 255, 255));
+    buttonWithLabel1.setAction(buttonCallback);
+
     add(image);
     add(redbutton);
     add(greenbutton);
+    add(buttonWithLabel1);
 }
 
 void ledScreenViewBase::setupScreen()
@@ -51,5 +59,12 @@ void ledScreenViewBase::buttonCallbackHandler(const touchgfx::AbstractButton& sr
         //When greenbutton clicked call virtual function
         //Call green_buttonclick
         green_buttonclick();
+    }
+    else if (&src == &buttonWithLabel1)
+    {
+        //Interaction1
+        //When buttonWithLabel1 clicked change screen to uartScreen
+        //Go to uartScreen with screen transition towards East
+        application().gotouartScreenScreenSlideTransitionEast();
     }
 }

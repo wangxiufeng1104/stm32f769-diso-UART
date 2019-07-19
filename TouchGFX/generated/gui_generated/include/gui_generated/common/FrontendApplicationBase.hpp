@@ -18,6 +18,12 @@ public:
     // ledScreen
     void gotoledScreenScreenNoTransition();
 
+    void gotoledScreenScreenSlideTransitionWest();
+
+
+    // uartScreen
+    void gotouartScreenScreenSlideTransitionEast();
+
 protected:
     touchgfx::Callback<FrontendApplicationBase> transitionCallback;
     FrontendHeap& frontendHeap;
@@ -25,6 +31,12 @@ protected:
 
     // ledScreen
     void gotoledScreenScreenNoTransitionImpl();
+
+    void gotoledScreenScreenSlideTransitionWestImpl();
+
+
+    // uartScreen
+    void gotouartScreenScreenSlideTransitionEastImpl();
 };
 
 #endif // FRONTENDAPPLICATIONBASE_HPP

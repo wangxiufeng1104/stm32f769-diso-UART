@@ -9,6 +9,8 @@
 #include <touchgfx/Texts.hpp>
 #include <gui/ledscreen_screen/ledScreenView.hpp>
 #include <gui/ledscreen_screen/ledScreenPresenter.hpp>
+#include <gui/uartscreen_screen/uartScreenView.hpp>
+#include <gui/uartscreen_screen/uartScreenPresenter.hpp>
 
 using namespace touchgfx;
 
@@ -36,5 +38,30 @@ void FrontendApplicationBase::gotoledScreenScreenNoTransition()
 void FrontendApplicationBase::gotoledScreenScreenNoTransitionImpl()
 {
     makeTransition<ledScreenView, ledScreenPresenter, touchgfx::NoTransition, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
+}
+
+
+void FrontendApplicationBase::gotoledScreenScreenSlideTransitionWest()
+{
+    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplication::gotoledScreenScreenSlideTransitionWestImpl);
+    pendingScreenTransitionCallback = &transitionCallback;
+}
+
+void FrontendApplicationBase::gotoledScreenScreenSlideTransitionWestImpl()
+{
+    makeTransition<ledScreenView, ledScreenPresenter, touchgfx::SlideTransition<WEST>, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
+}
+
+// uartScreen
+
+void FrontendApplicationBase::gotouartScreenScreenSlideTransitionEast()
+{
+    transitionCallback = touchgfx::Callback<FrontendApplicationBase>(this, &FrontendApplication::gotouartScreenScreenSlideTransitionEastImpl);
+    pendingScreenTransitionCallback = &transitionCallback;
+}
+
+void FrontendApplicationBase::gotouartScreenScreenSlideTransitionEastImpl()
+{
+    makeTransition<uartScreenView, uartScreenPresenter, touchgfx::SlideTransition<EAST>, Model >(&currentScreen, &currentPresenter, frontendHeap, &currentTransition, &model);
 }
 

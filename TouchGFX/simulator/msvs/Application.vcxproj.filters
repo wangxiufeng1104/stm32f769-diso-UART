@@ -163,6 +163,18 @@
     <Filter Include="Source Files\generated\gui_generated\ledscreen_screen">
       <UniqueIdentifier>751BF73D-E74D-4123-990C-B839A5BCC506</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\gui\uartscreen_screen">
+      <UniqueIdentifier>A37CBBFE-CA17-44BC-97D5-EDA16AD00AD6</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\gui\uartscreen_screen">
+      <UniqueIdentifier>0955D0F9-C3B8-43EC-A973-5B49340FA2C8</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\generated\gui_generated\uartscreen_screen">
+      <UniqueIdentifier>B87A41B3-04C9-45A9-B991-5E0B553AFDAD</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\generated\gui_generated\uartscreen_screen">
+      <UniqueIdentifier>8D5D8377-E5B2-4BD0-8929-16D23FDF1097</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(TouchGFXReleasePath)\framework\source\platform\driver\touch\SDL2TouchController.cpp">
@@ -197,6 +209,15 @@
     </ClCompile>
     <ClCompile Include="..\..\simulator\main.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\gui\src\uartscreen_screen\uartScreenPresenter.cpp">
+      <Filter>Source Files\gui\uartscreen_screen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\gui\src\uartscreen_screen\uartScreenView.cpp">
+      <Filter>Source Files\gui\uartscreen_screen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\generated\gui_generated\src\uartscreen_screen\uartScreenViewBase.cpp">
+      <Filter>Source Files\generated\gui_generated\uartscreen_screen</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -636,6 +657,18 @@
     </ClInclude>
     <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\ledscreen_screen\ledScreenViewBase.hpp">
       <Filter>Header Files\generated\gui_generated\ledscreen_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\common\UserBoardPara.hpp">
+      <Filter>Header Files\gui\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\uartscreen_screen\uartScreenPresenter.hpp">
+      <Filter>Header Files\gui\uartscreen_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\gui\include\gui\uartscreen_screen\uartScreenView.hpp">
+      <Filter>Header Files\gui\uartscreen_screen</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\generated\gui_generated\include\gui_generated\uartscreen_screen\uartScreenViewBase.hpp">
+      <Filter>Header Files\generated\gui_generated\uartscreen_screen</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

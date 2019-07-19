@@ -1,3 +1,17 @@
 Converting images
-Compiling generated/gui_generated/src/ledscreen_screen/ledScreenViewBase.cpp
-Linking build/bin/simulator.exe
+Compiling gui/src/model/Model.cpp
+Compiling generated/gui_generated/src/uartscreen_screen/uartScreenViewBase.cpp
+gui/src/model/Model.cpp: In member function 'void Model::set_light_toggle(uint8_t)':
+gui/src/model/Model.cpp:24:16: error: 'led_msgHandle' was not declared in this scope
+   osMessagePut(led_msgHandle,data,200);
+                ^~~~~~~~~~~~~
+gui/src/model/Model.cpp:24:38: error: 'osMessagePut' was not declared in this scope
+   osMessagePut(led_msgHandle,data,200);
+                                      ^
+simulator/gcc/Makefile:220: recipe for target 'build/MINGW32_NT-6.2/gui/src/model/Model.o' failed
+make[2]: *** [build/MINGW32_NT-6.2/gui/src/model/Model.o] Error 1
+make[2]: *** Waiting for unfinished jobs....
+simulator/gcc/Makefile:182: recipe for target 'generate_assets' failed
+make[1]: *** [generate_assets] Error 2
+simulator/gcc/Makefile:40: recipe for target 'all' failed
+make: *** [all] Error 2
